@@ -106,9 +106,9 @@ void noDelayBlink(byte pin, int blinkZeit );
 
 void showTimeDate(void);
 void showTimeDateEpoch(void);
-
-void max7219_Init(uint8_t intensivity);
 /*
+void max7219_Init(uint8_t intensivity);
+
 void max7219_SetIntensivity(uint8_t intensivity);
 void max7219_Clean(void);
 void max7219_SendData(uint8_t addr, uint8_t data);
@@ -163,6 +163,7 @@ void setup()
   pinMode(19, OUTPUT);
   pinMode(PC13, OUTPUT);
   pinMode(PB11, OUTPUT);
+  pinMode(PA15, OUTPUT);
 
   rtc.setClockSource(STM32RTC::LSE_CLOCK);
   rtc.begin(); // initialize RTC
@@ -207,7 +208,7 @@ void setup()
   
   //Setup of 7 Segment LED
   max7219_Init(8);
-  max7219_PrintDigit(DIGIT_3, LETTER_E, false);
+  //max7219_PrintDigit(DIGIT_3, LETTER_E, false);
 
   //Setup Menue
   link_menu();

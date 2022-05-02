@@ -5,8 +5,8 @@
  *      Author: tabur
  */
 
-#ifndef MAX7219_H_
-#define MAX7219_H_
+#ifndef max7219_h_
+#define max7219_h_
 
 #include "Arduino.h"
 #include "stdbool.h"
@@ -72,4 +72,4 @@ MAX7219_Digits max7219_PrintItos(MAX7219_Digits position, int value);
 MAX7219_Digits max7219_PrintNtos(MAX7219_Digits position, uint32_t value, uint8_t n);
 MAX7219_Digits max7219_PrintFtos(MAX7219_Digits position, float value, uint8_t n);
 
-#endif /* MAX7219_H_ */
+#endif /* max7219_h_ */
