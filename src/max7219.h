@@ -20,7 +20,7 @@
 
 extern SPI_HandleTypeDef 	SPI_PORT;
 
-typedef enum {
+enum MAX7219_REGISTERS {
   REG_NO_OP 		= 0x00,
   REG_DIGIT_0 		= 0x01,
   REG_DIGIT_1 		= 0x02,
@@ -35,14 +35,14 @@ typedef enum {
   REG_SCAN_LIMIT 	= 0x0B,
   REG_SHUTDOWN 		= 0x0C,
   REG_DISPLAY_TEST 	= 0x0F,
-}MAX7219_REGISTERS;
+};
 
-typedef enum {
+enum MAX7219_Digits{
   DIGIT_1 = 1, DIGIT_2 = 2, DIGIT_3 = 3, DIGIT_4 = 4,
   DIGIT_5 = 5, DIGIT_6 = 6, DIGIT_7 = 7, DIGIT_8 = 8
-}MAX7219_Digits;
+};
 
-typedef enum {
+enum MAX7219_Numeric{
   NUM_0		= 0x00,
   NUM_1		= 0x01,
   NUM_2		= 0x02,
@@ -59,7 +59,7 @@ typedef enum {
   LETTER_L	= 0x0D,
   LETTER_P	= 0x0E,
   BLANK		= 0x0F
-}MAX7219_Numeric;
+};
 
 class max7219sevSeg {
   private:
