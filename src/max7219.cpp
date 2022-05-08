@@ -3,12 +3,14 @@
  *
  *  Created on: May 11, 2019
  *      Author: tabur
+ * 
+ * altered for C plus plus by C. Schumachers 2022
  */
 #include "Arduino.h"
 #include "max7219.h"
 
-#define CS_SET() 	digtalWrite(SPI_CS_Pin, LOW); //HAL_GPIO_WritePin(CS_MAX7219_GPIO_Port, CS_MAX7219_Pin, GPIO_PIN_RESET)
-#define CS_RESET() 	digtalWrite(SPI_CS_Pin, HIGH); //HAL_GPIO_WritePin(CS_MAX7219_GPIO_Port, CS_MAX7219_Pin, GPIO_PIN_SET)
+//#define CS_SET() 	 //HAL_GPIO_WritePin(CS_MAX7219_GPIO_Port, CS_MAX7219_Pin, GPIO_PIN_RESET)
+//#define CS_RESET() 	//HAL_GPIO_WritePin(CS_MAX7219_GPIO_Port, CS_MAX7219_Pin, GPIO_PIN_SET)
 
 static uint8_t decodeMode = 0x00;
 
@@ -34,7 +36,11 @@ static uint8_t SYMBOLS[] = {
 static uint16_t getSymbol(uint8_t number);
 static uint32_t lcdPow10(uint8_t n);
 
-void max7219_Init(uint8_t intensivity)
+max7219sevSeg::max7219sevSeg(byte CS_Pin) {
+  SPI_CS_Pin = CS_Pin;
+}
+
+void max7219sevSeg::max7219_Init(uint8_t intensivity)
 {
 	max7219_Turn_On();
 	max7219_SendData(REG_SCAN_LIMIT, NUMBER_OF_DIGITS - 1);
@@ -42,7 +48,7 @@ void max7219_Init(uint8_t intensivity)
 	max7219_Clean();
 }
 
-void max7219_SetIntensivity(uint8_t intensivity)
+void max7219sevSeg::max7219_SetIntensivity(uint8_t intensivity)
 {
 	if (intensivity > 0x0F)
 	{
@@ -52,7 +58,7 @@ void max7219_SetIntensivity(uint8_t intensivity)
 	max7219_SendData(REG_INTENSITY, intensivity);
 }
 
-void max7219_Clean()
+void max7219sevSeg::max7219_Clean()
 {
 	uint8_t clear = 0x00;
 
@@ -67,37 +73,37 @@ void max7219_Clean()
 	}
 }
 
-void max7219_SendData(uint8_t addr, uint8_t data)
+void max7219sevSeg::max7219_SendData(uint8_t addr, uint8_t data)
 {
-	CS_SET();
+	digitalWrite(SPI_CS_Pin, LOW); //CS_SET();
 	HAL_SPI_Transmit(&hspi1, &addr, 1, HAL_MAX_DELAY);
 	HAL_SPI_Transmit(&hspi1, &data, 1, HAL_MAX_DELAY);
-	CS_RESET();
+	digitalWrite(SPI_CS_Pin, HIGH);  //CS_RESET();
 }
 
-void max7219_Turn_On(void)
+void max7219sevSeg::max7219_Turn_On(void)
 {
 	max7219_SendData(REG_SHUTDOWN, 0x01);
 }
 
-void max7219_Turn_Off(void)
+void max7219sevSeg::max7219_Turn_Off(void)
 {
 	max7219_SendData(REG_SHUTDOWN, 0x00);
 }
 
-void max7219_Decode_On(void)
+void max7219sevSeg::max7219_Decode_On(void)
 {
 	decodeMode = 0xFF;
 	max7219_SendData(REG_DECODE_MODE, decodeMode);
 }
 
-void max7219_Decode_Off(void)
+void max7219sevSeg::max7219_Decode_Off(void)
 {
 	decodeMode = 0x00;
 	max7219_SendData(REG_DECODE_MODE, decodeMode);
 }
 
-void max7219_PrintDigit(MAX7219_Digits position, MAX7219_Numeric numeric, bool point)
+void max7219sevSeg::max7219_PrintDigit(MAX7219_Digits position, MAX7219_Numeric numeric, bool point)
 {
 	if(position > NUMBER_OF_DIGITS)
 	{
@@ -128,7 +134,7 @@ void max7219_PrintDigit(MAX7219_Digits position, MAX7219_Numeric numeric, bool p
 	}
 }
 
-MAX7219_Digits max7219_PrintItos(MAX7219_Digits position, int value)
+MAX7219_Digits max7219sevSeg::max7219_PrintItos(MAX7219_Digits position, int value)
 {
 	max7219_SendData(REG_DECODE_MODE, 0xFF);
 
@@ -175,7 +181,7 @@ MAX7219_Digits max7219_PrintItos(MAX7219_Digits position, int value)
 	return position;
 }
 
-MAX7219_Digits max7219_PrintNtos(MAX7219_Digits position, uint32_t value, uint8_t n)
+MAX7219_Digits max7219sevSeg::max7219_PrintNtos(MAX7219_Digits position, uint32_t value, uint8_t n)
 {
 	max7219_SendData(REG_DECODE_MODE, 0xFF);
 
@@ -200,7 +206,7 @@ MAX7219_Digits max7219_PrintNtos(MAX7219_Digits position, uint32_t value, uint8_
 	return position;
 }
 
-MAX7219_Digits max7219_PrintFtos(MAX7219_Digits position, float value, uint8_t n)
+MAX7219_Digits max7219sevSeg::max7219_PrintFtos(MAX7219_Digits position, float value, uint8_t n)
 {
 	if(n > 4)
 	{

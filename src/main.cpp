@@ -22,6 +22,7 @@ time_t nowRTC;                  // this is the epoch
 #include "stm32f1xx.h"
 
 #include "max7219.h"
+max7219sevSeg lc7(PA15);
 
 #include "OneButton.h"
 OneButton button1(A2, true);
@@ -207,7 +208,7 @@ void setup()
   lcd.print(__TIME__);
   
   //Setup of 7 Segment LED
-  max7219_Init(8);
+  lc7.max7219_Init(8);
   //max7219_PrintDigit(DIGIT_3, LETTER_E, false);
 
   //Setup Menue
