@@ -12,7 +12,7 @@
 typedef struct menu menu; //forward declaration & typedef for type menu
 
 struct menu {
-  char* text;   //text to output when this is active
+  const char* text;   //text to output when this is active
   menu* up;   //pointer to whatever is 'up', can be also a reference to itself
   menu* down;   //dito for down
   menu* ok;   //where to go on 'ok' (enter), set to NULL if this is a leaf node
@@ -30,7 +30,7 @@ void menu_lcdInit(LiquidCrystal_I2C* usedLCD);
 
 void workMenu(int aufAb, int vorZurueck);
 
-void ptr_init(int* multiPtr_f, int* varPtr_f, char* unitPtr_f);
+void ptr_init(int* multiPtr_f, int* varPtr_f, const char* unitPtr_f);
 
 void menu_up();
 void menu_down();

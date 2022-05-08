@@ -145,7 +145,7 @@ MAX7219_Digits max7219sevSeg::max7219_PrintItos(MAX7219_Digits position, int val
 		if(position > 0)
 		{
 			max7219_SendData(position, MINUS);
-			position--;
+			position = position -1; //position--;
 		}
 		value = -value;
 	}
@@ -160,7 +160,7 @@ MAX7219_Digits max7219sevSeg::max7219_PrintItos(MAX7219_Digits position, int val
 	if(position > 0)
 	{
 		max7219_SendData(position, value/i);
-		position--;
+		position = position -1; //position--;
 	}
 
 	i /= 10;
@@ -170,7 +170,7 @@ MAX7219_Digits max7219sevSeg::max7219_PrintItos(MAX7219_Digits position, int val
 		if(position > 0)
 		{
 			max7219_SendData(position, (value % (i * 10)) / i);
-			position--;
+			position = position -1; //position--;
 		}
 
 		i /= 10;
@@ -194,7 +194,7 @@ MAX7219_Digits max7219sevSeg::max7219_PrintNtos(MAX7219_Digits position, uint32_
 			if(position > 0u)
 			{
 				max7219_SendData(position, (value / i) % 10u);
-				position--;
+				position = position -1; //position--;
 			}
 
 			i /= 10u;
@@ -220,7 +220,7 @@ MAX7219_Digits max7219sevSeg::max7219_PrintFtos(MAX7219_Digits position, float v
 		if(position > 0)
 		{
 			max7219_SendData(position, MINUS);
-			position--;
+			position = position -1; //position--;
 		}
 
 		value = -value;

@@ -41,51 +41,51 @@ int vorZurueckB; //Variable die Mittels Knopf verändert wird; muss manuell zur�
 int setValFlag;  //Variable für Eingabe einer Variablen
 
 //Menue-Eintraege hier vornehmen
-static char* a1text= "RGB LED";
-static char* a2text= "Uhrzeit & Datum";
-static char* a3text= "A3 text";
-static char* a4text= "A4 text";
-static char* a5text= "A5 text";
-static char* a1a1text= "LED 13 Blink";
-static char* a1a2text= "LED Gruen";
-static char* a1a3text= "LED Blau 2";
-static char* a1a4text= "LED Rot";
-static char* a1a5text= "LED Blau";
-static char* a2a1text= "set second";
-static char* a2a2text= "set minute";
-static char* a2a3text= "set hour";
-static char* a2a4text= "set weekDay";
-static char* a2a5text= "set day";
-static char* a2a6text= "set month";
-static char* a2a7text= "set year";
+static const char* a1text= "RGB LED";
+static const char* a2text= "Uhrzeit & Datum";
+static const char* a3text= "A3 text";
+static const char* a4text= "A4 text";
+static const char* a5text= "A5 text";
+static const char* a1a1text= "LED 13 Blink";
+static const char* a1a2text= "LED Gruen";
+static const char* a1a3text= "LED Blau 2";
+static const char* a1a4text= "LED Rot";
+static const char* a1a5text= "LED Blau";
+static const char* a2a1text= "set second";
+static const char* a2a2text= "set minute";
+static const char* a2a3text= "set hour";
+static const char* a2a4text= "set weekDay";
+static const char* a2a5text= "set day";
+static const char* a2a6text= "set month";
+static const char* a2a7text= "set year";
 
 //ENDE Menue wichtige Eintraege
 
 int toggleInterval = 250;
 int multiplier = 5;
-char* dutyUnit = " ms";
+const char* dutyUnit = " ms";
 
 int m_hours;
 int multiplierHours = 1;
-char* hoursUnit = " h";
+const char* hoursUnit = " h";
 int m_minutes;
 int multiplierMinutes = 1;
-char* minutesUnit = "min";
+const char* minutesUnit = "min";
 int m_seconds;
 int multiplierSeconds = 10;
-char* secondUnit = "s";
+const char* secondUnit = "s";
 int m_weekDay;
 int multiplierWeekDay = 1;
-char* weekDayUnit = "-";
+const char* weekDayUnit = "-";
 int m_day;
 int multiplierDay = 1;
-char* dayUnit = "-";
+const char* dayUnit = "-";
 int m_month;
 int multiplierMonth = 1;
-char* monthUnit = "-";
+const char* monthUnit = "-";
 int m_year = 2022;
 int multiplierYear = 1;
-char* yearUnit = "-";
+const char* yearUnit = "-";
 
 int keepFlag = 0;
 unsigned long keepMillis;
