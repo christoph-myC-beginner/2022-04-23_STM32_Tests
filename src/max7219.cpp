@@ -133,7 +133,7 @@ void max7219sevSeg::max7219_PrintDigit(MAX7219_Digits position, MAX7219_Numeric 
 		}
 	}
 }
-
+/*
 MAX7219_Digits max7219sevSeg::max7219_PrintItos(MAX7219_Digits position, int value)
 {
 	max7219_SendData(REG_DECODE_MODE, 0xFF);
@@ -189,7 +189,7 @@ MAX7219_Digits max7219sevSeg::max7219_PrintNtos(MAX7219_Digits position, uint32_
 	{
 		uint32_t i = lcdPow10(n - 1u);
 
-		while (i > 0u)	/* Display at least one symbol */
+		while (i > 0u)	// Display at least one symbol 
 		{
 			if(position > 0u)
 			{
@@ -239,7 +239,7 @@ MAX7219_Digits max7219sevSeg::max7219_PrintFtos(MAX7219_Digits position, float v
 
 	return position;
 }
-
+*/
 static uint16_t getSymbol(uint8_t number)
 {
 	return SYMBOLS[number];

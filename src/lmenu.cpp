@@ -19,14 +19,14 @@ static menu* current;
 static int* setValFlag;
 static int* multiPtr;
 static int* varPtr;
-static char* unitPtr;
+static const char* unitPtr;
 
 void menu_init(menu* erster, int* flagSetVal_f){
   current = erster;
   setValFlag = flagSetVal_f;
 }
 
-void ptr_init(int* multiPtr_f, int* varPtr_f, char* unitPtr_f){
+void ptr_init(int* multiPtr_f, int* varPtr_f, const char* unitPtr_f){
   multiPtr = multiPtr_f;
   varPtr = varPtr_f;
   unitPtr = unitPtr_f;
