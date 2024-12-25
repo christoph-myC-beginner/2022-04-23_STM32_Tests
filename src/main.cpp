@@ -21,8 +21,12 @@ time_t nowRTC;                  // this is the epoch
 
 #include "stm32f1xx.h"
 
-#include "max7219.h"
-max7219sevSeg lc7(PA15);
+//#include "max7219.h"
+//max7219sevSeg lc7(PA15);
+//We always have to include the library
+#include "LedController.hpp"
+LedController lc7;
+
 
 #include "OneButton.h"
 OneButton button1(A2, true);
@@ -96,7 +100,7 @@ unsigned long testEpoch = 1617900991;
 
 unsigned long delaytime=250;
 
-int16_t cntVal = 0;
+int32_t cntVal = 0;
 
 //declaration of functions
 //void serialMsg(int msgZeit); 
@@ -158,13 +162,56 @@ void a2a7action();
 void link_menu();
 //END declaration of functions
 
+/*
+ This method will display the characters for the
+ word "Arduino" one after the other on digit 6 to 0. 
+ */
+void writeArduinoOn7Segment() {
+  lc7.setChar(0,6,'A',false);
+  delay(delaytime);
+  lc7.setRow(0,5,0x05);
+  delay(delaytime);
+  lc7.setChar(0,4,'d',false);
+  delay(delaytime);
+  lc7.setRow(0,3,0x1c);
+  delay(delaytime);
+  lc7.setRow(0,2,B00010000);
+  delay(delaytime);
+  lc7.setRow(0,1,0x15);
+  delay(delaytime);
+  lc7.setRow(0,0,0x1D);
+  delay(delaytime);
+  lc7.clearMatrix();
+  delay(delaytime);
+} 
+
+void print7Segment(int32_t x_in) {
+  
+  lc7.setChar(0,0, char((x_in%10)),false);
+  x_in = x_in / 10;
+  lc7.setChar(0,1, char((x_in%10)),false);
+  x_in = x_in / 10;
+  lc7.setChar(0,2, char((x_in%10)),false);
+  x_in = x_in / 10;
+  lc7.setChar(0,3, char((x_in%10)),false);
+  x_in = x_in / 10;
+  lc7.setChar(0,4, char((x_in%10)),false);
+  x_in = x_in / 10;
+  lc7.setChar(0,5, char((x_in%10)),false);
+  x_in = x_in / 10;
+  lc7.setChar(0,6, char((x_in%10)),false);
+  x_in = x_in / 10;
+  lc7.setChar(0,7, char((x_in%10)),false);
+  
+}
+
 void setup()
 {
   Serial.begin(115200);
   pinMode(19, OUTPUT);
   pinMode(PC13, OUTPUT);
   pinMode(PB11, OUTPUT);
-  pinMode(PA15, OUTPUT);
+  //pinMode(PA15, OUTPUT);
 
   rtc.setClockSource(STM32RTC::LSE_CLOCK);
   rtc.begin(); // initialize RTC
@@ -208,8 +255,16 @@ void setup()
   lcd.print(__TIME__);
   
   //Setup of 7 Segment LED
-  lc7.max7219_Init(8);
-  //max7219_PrintDigit(DIGIT_3, LETTER_E, false);
+  lc7 = LedController(PB5, PB3, PA15, 1);
+  /*
+   The MAX72XX is in power-saving mode on startup,
+   we have to do a wakeup call
+   */
+  lc7.activateAllSegments();
+  /* Set the brightness to a medium values */
+  lc7.setIntensity(8);
+  /* and clear the display */
+  lc7.clearMatrix();
 
   //Setup Menue
   link_menu();
@@ -220,6 +275,7 @@ void setup()
   //menu_lcdPrint();
   menu_print3();
   //ENDE Setup Menue
+  cntVal = 87654321;
 }
 
 void loop()
@@ -246,6 +302,8 @@ void loop()
       keepFlag = keepFlagForTime(20000, keepFlag);
     break;
   }
+  print7Segment(cntVal);
+  //writeArduinoOn7Segment();
 }
 
 void noDelayBlink(byte pin, int blinkZeit ) {
